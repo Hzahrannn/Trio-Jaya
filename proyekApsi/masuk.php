@@ -155,9 +155,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <td><?php echo $row["jmlh"];?></td>
                   <td><?php echo $row["rak"];?></td>
                   <td>Rp <?php echo $row["harga"];?>,00</td>
-                  <td><button type="button" class="btn btn-primary">
+                  <td><button type="button" class="btn btn-primary" data-toggle="modal" 
+                    data-target="#restok<?php echo $row["kd_brg"];?>">
                     <i class="fas fa-plus"></i> Restok
                   </button></td>
+                  <div id="restok<?php echo $row["kd_brg"];?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+ <div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Restok Barang</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body p-4">
+      <div class="row">
+        <div class="col-md-12">
+          <form action="restok.php" method="POST">
+            <div class="form-group">
+              <input type="hidden" class="form-control" id="field-1" name="kd_brg" value="<?php echo $row["kd_brg"];?>" required="">
+              <label for="field-1" class="control-label" >Jumlah :</label>
+              <input type="nama" class="form-control" id="field-1" name="jmlh" value="<?php echo $row["jmlh"];?>" required="">
+            </div>
+        </div> 
+      </div>                   
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-info waves-effect waves-light" name="submit">Restok</button>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+</div>
                 </tr>
                 <?php
                   }
@@ -250,6 +278,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </form>
 </div>
 </div>
+
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
