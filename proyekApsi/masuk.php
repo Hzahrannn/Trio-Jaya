@@ -73,14 +73,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="starter.html" class="nav-link">
+                <a href="starter.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Penjualan</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="transaksi.html" class="nav-link">
+                <a href="transaksi.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Input Transaksi</p>
                 </a>
@@ -138,37 +138,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th>Barang</th>
                   <th>Jumlah</th>
                   <th>Letak Rak</th>
+                  <th>Harga</th>
                   <th>Restok</th>
                 </tr>
                 </thead>
                 <tbody>
+                <?php
+                  require_once( "db.php");
+                  $sql = "SELECT * FROM tb_barang";
+                  $result = $db->query($sql);
+                  while($row = $result->fetch_assoc()){
+                ?>
                 <tr>
-                  <td>B001</td>
-                  <td>Buku</td>
-                  <td>100</td>
-                  <td>C03</td>
+                  <td><?php echo $row["kd_brg"];?></td>
+                  <td><?php echo $row["nm_brg"];?></td>
+                  <td><?php echo $row["jmlh"];?></td>
+                  <td><?php echo $row["rak"];?></td>
+                  <td>Rp <?php echo $row["harga"];?>,00</td>
                   <td><button type="button" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Restok
                   </button></td>
                 </tr>
-                <tr>
-                  <td>B002</td>
-                  <td>Pena</td>
-                  <td>110</td>
-                  <td>C01</td>
-                  <td><button type="button" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Restok
-                  </button></td>
-                </tr>
-                <tr>
-                  <td>B006</td>
-                  <td>Pensil</td>
-                  <td>200</td>
-                  <td>C02</td>
-                  <td><button type="button" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Restok
-                  </button></td>
-                </tr>
+                <?php
+                  }
+                ?>
                 </tbody>
                 <tfoot>
                 <tr>
@@ -186,13 +179,77 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- /.card -->
         </div>
         <!-- /.col -->
+        <div class="row no-print">
+          <div class="col-12">
+            <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;" data-toggle="modal" data-target="#daftar">
+              <i class="fas fa-plus"></i> Tambah Barang Baru
+            </button>
+          </div>
+        </div>
       </div>
       <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
+<div id="daftar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+ <div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Input Barang Baru</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body p-4">
+      <div class="row">
+        <div class="col-md-12">
+          <form action="inputbarang.php" method="POST">
+            <div class="form-group">
+              <label for="field-1" class="control-label" >Kode Barang :</label>
+              <input type="nama" class="form-control" id="field-1" name="kd_brg" required="">
+            </div>
+        </div> 
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+              <label for="field-1" class="control-label" >Nama Barang :</label>
+              <input type="nama" class="form-control" id="field-1" name="nm_brg" required="">
+            </div>
+        </div> 
+      </div>
+                                            
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="field-5" class="control-label">Jumlah Barang :</label>
+            <input type="text" class="form-control" id="field-5" name="jmlh" required="">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="field-5" class="control-label">Lokasi Rak :</label>
+            <input type="text" class="form-control" id="field-5" name="rak" required="">
+          </div>
+        </div>                                              
+     </div>
+     <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+              <label for="field-1" class="control-label" >Harga Barang :</label>
+              <input type="nama" class="form-control" id="field-1" name="harga" required="">
+            </div>
+        </div> 
+      </div>
+                      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-info waves-effect waves-light" name="submit">Masukan</button>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+</div>
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->

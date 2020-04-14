@@ -69,7 +69,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="starter.html" class="nav-link">
+                <a href="starter.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Penjualan</p>
                 </a>
@@ -83,7 +83,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
 
               <li class="nav-item">
-                <a href="masuk.html" class="nav-link">
+                <a href="masuk.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Input Barang Masuk</p>
                 </a>
@@ -230,7 +230,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <!-- this row will not appear when printing -->
               <div class="row no-print">
                 <div class="col-12">
-                  <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print Nota</a>
+                  <a href="invoice-print.php" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print Nota</a>
                   <button type="button" class="btn btn-success float-right"><i class="fas fa-check"></i> Submit
                     Payment
                   </button>

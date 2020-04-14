@@ -77,14 +77,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
 
               <li class="nav-item">
-                <a href="transaksi.html" class="nav-link">
+                <a href="transaksi.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Input Transaksi</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="masuk.html" class="nav-link">
+                <a href="masuk.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Input Barang Masuk</p>
                 </a>
