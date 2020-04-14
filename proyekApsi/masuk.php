@@ -172,6 +172,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <form action="restok.php" method="POST">
             <div class="form-group">
               <input type="hidden" class="form-control" id="field-1" name="kd_brg" value="<?php echo $row["kd_brg"];?>" required="">
+              <input type="hidden" class="form-control" id="field-1" name="j1" value="<?php echo $row["jmlh"];?>" required="">
               <label for="field-1" class="control-label" >Jumlah :</label>
               <input type="nama" class="form-control" id="field-1" name="jmlh" value="<?php echo $row["jmlh"];?>" required="">
             </div>
