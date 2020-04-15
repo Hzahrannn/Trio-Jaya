@@ -130,7 +130,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="col-12">
                   <h4>
                     <i class="fas fa-globe"></i> FOTOKOPI TRIO JAYA
-                    <small class="float-right">Date: 2/01/2020</small>
+                    <small class="float-right">Date: <?php $tgl=date('l, d-m-Y');
+                    echo $tgl; ?></small>
                   </h4>
                 </div>
                 <!-- /.col -->
@@ -138,8 +139,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <!-- info row -->
               <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
-                  <b>No Nota #007612</b><br>
-                  <b>ID Transaksi:</b> 4F3S8J<br><br>
+                  <br><br>
                 </div>
                 <!-- /.col -->
               </div>
@@ -159,34 +159,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Buku Tulis</td>
-                      <td>B001</td>
-                      <td>Rp 5,000</td>
-                      <td>Rp 5,000</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Pena</td>
-                      <td>B002</td>
-                      <td>Rp 2,000</td>
-                      <td>Rp 4,000</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Pensil</td>
-                      <td>B006</td>
-                      <td>Rp 1,000</td>
-                      <td>Rp 3,000</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Penghapus</td>
-                      <td>B021</td>
-                      <td>Rp 2,000</td>
-                      <td>Rp 2,000</td>
-                    </tr>
+                  <?php
+                  require_once( "db.php");
+                  $sub=0;
+                  $sql = "SELECT * FROM tb_cart
+                          INNER JOIN tb_barang ON tb_cart.kd_brg = tb_barang.kd_brg;";
+                  $result = $db->query($sql);
+                  if(mysqli_num_rows($result) == 0){
+                                echo '<tr><td colspan="8">Tidak ada data.</td></tr>';
+                            }
+                            else{
+                                while($row = $result->fetch_assoc()){
+                                    echo '
+                                    <tr>
+                                        
+                                        <td>'.$row['qty'].'</td>
+                                        <td>'.$row['nm_brg'].'</td>
+                                        <td>'.$row['kd_brg'].'</td>
+                                        <td>Rp '.number_format($row['harga']).'</td>
+                                        <td>Rp '.number_format($row['harga'] * $row['qty']) .'</td>
+                                         
+                                        
+                                    </tr>
+                                    ';
+                                    $sub = $sub + ($row['harga'] * $row['qty'] );
+                                }
+                            }
+                            ?>
+
                     </tbody>
                   </table>
                 </div>
@@ -200,13 +200,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
                 <!-- /.col -->
                 <div class="col-6">
-                  <p class="lead">Tanggal Transaksi 2/01/2020</p>
+                  <p class="lead"><?php echo $tgl; ?></p>
 
                   <div class="table-responsive">
                     <table class="table">
                       <tr>
                         <th style="width:50%">Subtotal:</th>
-                        <td>Rp 14,000</td>
+                        <td>Rp <?php echo number_format($sub); ?></td>
                       </tr>
                       <tr>
                         <th>Pajak</th>
@@ -218,7 +218,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       </tr>
                       <tr>
                         <th>Total:</th>
-                        <td>Rp 14,000</td>
+                        <td>Rp <?php echo number_format($sub); ?></td>
                       </tr>
                     </table>
                   </div>
@@ -230,11 +230,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <!-- this row will not appear when printing -->
               <div class="row no-print">
                 <div class="col-12">
-                  <a href="invoice-print.php" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print Nota</a>
-                  <button type="button" class="btn btn-success float-right"><i class="fas fa-check"></i> Submit
+                  <a href="cekout.php" class="btn btn-success float-right"><i class="fas fa-check"></i> Submit
                     Payment
-                  </button>
-                  <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                  </a>
+                  <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;" data-toggle="modal" data-target="#daftar">
                     <i class="fas fa-plus"></i> Tambah Barang
                   </button>
                 </div>
@@ -248,6 +247,65 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  <div id="daftar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+ <div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Tambah Item</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body p-4">
+     <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Data Barang</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Kode barang</th>
+                  <th>Barang</th>
+                  <th>Tambah</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                  require_once( "db.php");
+                  $sql = "SELECT * FROM tb_barang";
+                  $result = $db->query($sql);
+                  while($row = $result->fetch_assoc()){
+                ?>
+                <tr>
+                  <td><?php echo $row["kd_brg"];?></td>
+                  <td><?php echo $row["nm_brg"];?></td>
+                  <td><a href="add.php?id=<?php echo $row['kd_brg'];?>" type="button" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                  </button></td>
+                </tr>
+                <?php 
+                }
+                ?>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+                      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+</div>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -275,7 +333,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="plugins/datatables/jquery.dataTables.js"></script>
+<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+    });
+  });
+</script>
 </body>
 </html>
