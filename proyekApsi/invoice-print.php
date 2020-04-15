@@ -29,7 +29,8 @@
           <i class="fas fa-globe"></i> FOTOKOPI TRIO JAYA
           <?php
           require_once( "db.php");
-          $sql = "SELECT * FROM tb_nota;";
+          $kd = $_GET['id'];
+          $sql = "SELECT * FROM tb_nota kd_nota ='$kd';";
                   $result = $db->query($sql);
                   while($row = $result->fetch_assoc()){
                     $a = $row['kd_nota'];

@@ -276,6 +276,69 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- /.col -->
           <!-- /.col -->
         </div>
+        <div class="row">
+          <!-- Left col -->
+          <div class="col-md-12">
+            <!-- MAP & BOX PANE -->
+            <!-- /.card -->
+
+            <!-- TABLE: LATEST ORDERS -->
+            <div class="card">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Transaksi Terbaru</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                      <?php
+          require_once( "db.php");
+          $sql = "SELECT * FROM tb_nota;";
+                  $result = $db->query($sql);
+                  while($row = $result->fetch_assoc()){
+                    
+          ?>
+                    <tr>
+                      <th>ID Transaksi</th>
+                      <th>Tanggal</th>
+                      <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td><a href="pages/examples/invoice.html"><?php echo $row['kd_nota']; ?></a></td>
+                      <td><?php echo $row['tanggal']; ?></td>
+                      <td><span class="badge badge-success"><?php echo number_format($row['total']); ?></span></td>
+                    </tr>
+                    <?php
+                  }
+                  ?>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Import ke Excel</a>
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+          <!-- /.col -->
+        </div>
         <!-- /.row -->
       </div><!--/. container-fluid -->
     </section>
