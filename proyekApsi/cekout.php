@@ -30,7 +30,7 @@ $sub=0;
                   	$kode = $row['kode'];
                   }
 
-$c = "#KN0".$kode;
+$c = "KN0".$kode;
 $b = md5($tgl1 ."". $a);
 
 				  $sql = "SELECT * FROM tb_cart;";
@@ -40,6 +40,21 @@ $b = md5($tgl1 ."". $a);
                   	$d2 = $row['qty'];
                   	$insert = "INSERT INTO tb_transaksi(id_trn, kd_brg,qty) VALUES('$b','$d1','$d2')";
 					if ($db->query($insert) === TRUE){
+					}
+					else{
+					}
+
+                  }
+
+                  $sql = "SELECT * FROM tb_cart 
+                  INNER JOIN tb_barang ON tb_cart.kd_brg = tb_barang.kd_brg;";
+                  $result = $db->query($sql);
+                  while($row = $result->fetch_assoc()){
+                  	$c1 = $row['kd_brg'];
+                  	$c2 = $row['qty'];
+                  	$c3 = ($row['jmlh'] - $row['qty']);
+                  	$update = "UPDATE tb_barang SET jmlh='$c3' WHERE kd_brg='$c1'";
+					if ($db->query($update) === TRUE){
 					}
 					else{
 					}

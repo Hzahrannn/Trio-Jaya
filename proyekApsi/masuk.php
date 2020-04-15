@@ -154,7 +154,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <td><?php echo $row["nm_brg"];?></td>
                   <td><?php echo $row["jmlh"];?></td>
                   <td><?php echo $row["rak"];?></td>
-                  <td>Rp <?php echo $row["harga"];?>,00</td>
+                  <td>Rp <?php echo number_format($row["harga"]);?></td>
                   <td><button type="button" class="btn btn-primary" data-toggle="modal" 
                     data-target="#restok<?php echo $row["kd_brg"];?>">
                     <i class="fas fa-plus"></i> Restok

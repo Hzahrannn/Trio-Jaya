@@ -28,9 +28,10 @@
         <h2 class="page-header">
           <i class="fas fa-globe"></i> FOTOKOPI TRIO JAYA
           <?php
+
           require_once( "db.php");
-          $kd = $_GET['id'];
-          $sql = "SELECT * FROM tb_nota kd_nota ='$kd';";
+          $asd = $_GET['id'];
+          $sql = "SELECT * FROM tb_nota WHERE kd_nota ='$asd'";
                   $result = $db->query($sql);
                   while($row = $result->fetch_assoc()){
                     $a = $row['kd_nota'];
@@ -39,7 +40,7 @@
                     $d = $row['total'];
                   }
           ?>
-          <small class="float-right">Date: <?php echo $c;?></small>
+          <br><small class="float-right">Date: <?php echo $c;?></small>
         </h2>
       </div>
       <!-- /.col -->
@@ -110,7 +111,6 @@
       </div>
       <!-- /.col -->
       <div class="col-6">
-        <p class="lead">Tanggal Transaksi 2/01/2020</p>
 
                   <div class="table-responsive">
                     <table class="table">
