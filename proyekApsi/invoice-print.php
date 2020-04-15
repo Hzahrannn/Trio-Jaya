@@ -27,7 +27,18 @@
       <div class="col-12">
         <h2 class="page-header">
           <i class="fas fa-globe"></i> FOTOKOPI TRIO JAYA
-          <small class="float-right">Date: 2/01/2020</small>
+          <?php
+          require_once( "db.php");
+          $sql = "SELECT * FROM tb_nota;";
+                  $result = $db->query($sql);
+                  while($row = $result->fetch_assoc()){
+                    $a = $row['kd_nota'];
+                    $b = $row['id_trn'];
+                    $c = $row['tanggal'];
+                    $d = $row['total'];
+                  }
+          ?>
+          <small class="float-right">Date: <?php echo $c;?></small>
         </h2>
       </div>
       <!-- /.col -->
@@ -37,8 +48,8 @@
       <!-- /.col -->
       <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
-                  <b>No Nota #007612</b><br>
-                  <b>ID Transaksi:</b> 4F3S8J<br><br>
+                  <b>No Nota <?php echo $a;?></b><br>
+                  <b>ID Transaksi:</b> <?php echo $b;?><br><br>
                 </div>
       <!-- /.col -->
     </div>
@@ -50,49 +61,48 @@
         <table class="table table-striped">
           <thead>
           <tr>
-                      <th>Qty</th>
-                      <th>Barang</th>
-                      <th>Kode Barang</th>
-                      <th>Harga</th>
-                      <th>Subtotal</th>
+                      <th>Qty  </th>
+                      <th>Barang  </th>
+                      <th>Kode Barang  </th>
+                      <th>Harga  </th>
+                      <th>Subtotal  </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Buku Tulis</td>
-                      <td>B001</td>
-                      <td>Rp 5,000</td>
-                      <td>Rp 5,000</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Pena</td>
-                      <td>B002</td>
-                      <td>Rp 2,000</td>
-                      <td>Rp 4,000</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Pensil</td>
-                      <td>B006</td>
-                      <td>Rp 1,000</td>
-                      <td>Rp 3,000</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Penghapus</td>
-                      <td>B021</td>
-                      <td>Rp 2,000</td>
-                      <td>Rp 2,000</td>
-                    </tr>
+                     <?php
+                  require_once( "db.php");
+                  $sub=0;
+                  $sql = "SELECT * FROM ((
+                  tb_nota INNER JOIN tb_transaksi ON tb_nota.id_trn = tb_transaksi.id_trn) 
+                      INNER JOIN tb_barang ON tb_transaksi.kd_brg = tb_barang.kd_brg) WHERE kd_nota ='$a';";
+                  $result = $db->query($sql);
+                  if(mysqli_num_rows($result) == 0){
+                                echo '<tr><td colspan="8">Tidak ada data.</td></tr>';
+                            }
+                            else{
+                                while($row = $result->fetch_assoc()){
+                                    echo '
+                                    <tr>
+                                        
+                                        <td>'.$row['qty'].'</td>
+                                        <td>'.$row['nm_brg'].'</td>
+                                        <td>'.$row['kd_brg'].'</td>
+                                        <td>Rp '.number_format($row['harga']).'</td>
+                                        <td>Rp '.number_format($row['harga'] * $row['qty']) .'</td>
+                                         
+                                        
+                                    </tr>
+                                    ';
+                                    $sub = $sub + ($row['harga'] * $row['qty'] );
+                                }
+                            }
+                            ?>
           </tbody>
         </table>
       </div>
       <!-- /.col -->
     </div>
     <!-- /.row -->
-
     <div class="row">
       <!-- accepted payments column -->
       <div class="col-6">
@@ -105,7 +115,7 @@
                     <table class="table">
                       <tr>
                         <th style="width:50%">Subtotal:</th>
-                        <td>Rp 14,000</td>
+                        <td>Rp <?php echo number_format($d);?></td>
                       </tr>
                       <tr>
                         <th>Pajak</th>
@@ -117,7 +127,7 @@
                       </tr>
                       <tr>
                         <th>Total:</th>
-                        <td>Rp 14,000</td>
+                        <td>Rp <?php echo number_format($d);?></td>
                       </tr>
           </table>
         </div>
@@ -130,8 +140,10 @@
 </div>
 <!-- ./wrapper -->
 
+
 <script type="text/javascript"> 
   window.addEventListener("load", window.print());
 </script>
+<br><a href="transaksi.php">Kembali</a>
 </body>
 </html>
