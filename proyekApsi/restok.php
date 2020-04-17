@@ -13,7 +13,7 @@ $kd = $_POST['kd_brg'];
 $jmlh = $_POST['jmlh'];
 $j = $_POST['j1'];
 $k = ($jmlh-$j);
-$tgl=date('h:i:s a');
+$tgl=date('l, d-m-Y');
 
 
 $update = "UPDATE tb_barang SET jmlh='$jmlh' WHERE kd_brg='$kd'";
